@@ -17,10 +17,10 @@ public class ApiError
     {
         Message = e.Message;
         StackTrace = e.StackTrace;
-        InnerException = e.InnerException;
+        InnerException = e.InnerException?.Message;
     }
 
     public string Message { get; set; }
     public string StackTrace { get; set; }
-    public string InnerException { get; set; }
+    public string? InnerException { get; set; }
 }

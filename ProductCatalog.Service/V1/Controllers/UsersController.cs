@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductCatalog.Data.Models;
 using ProductCatalog.Service.Api.Controllers;
+using ProductCatalog.Service.Api.Crypto;
+using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Filters;
+using ProductCatalog.Service.V1.Dto.Users;
 using ProductCatalog.Service.V1.Services;
 using System.Security.Claims;
 
@@ -43,11 +46,28 @@ public class UsersController : ExtendedController
 
     [HttpPost]
     [AuthAs(Roles.Admin)]
-    public async Task<IActionResult> AddUserAsync()
+    public async Task<IActionResult> AddUserAsync(AddUserDto dto)
     {
         try
         {
-            return Ok();
+            var users = await _usersService.FindAllAsync(new Dictionary<string, string?>
+            {
+                { "email", dto.Email }
+            });
+
+            if (users.Count() > 0)
+                throw new Exception(ExceptionsText.EmailWasRecerved);
+
+            var user = new User()
+            {
+                FirstName = dto.FirstName.Trim(),
+                LastName = dto.LastName?.Trim(),
+                Email = dto.Email,
+                PasswordHash = ShaHasher.Sha256(dto.Password)
+            };
+
+            user = await _usersService.AddAsync(user);
+            return Ok(user);
         }
         catch (Exception e)
         {

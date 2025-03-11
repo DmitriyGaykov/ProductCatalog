@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.V1.Services;
+using System.Net;
 using System.Security.Claims;
 
 namespace ProductCatalog.Service.Filters;
@@ -46,7 +47,7 @@ public class AuthAsAttribute : Attribute, IAsyncActionFilter
         }
         catch (Exception e)
         {
-            context.Result = new BadRequestObjectResult(new ApiError(e));
+            context.Result = new UnauthorizedObjectResult(new ApiError(e));
         }
     }
 }

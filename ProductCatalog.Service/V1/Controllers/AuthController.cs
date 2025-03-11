@@ -10,7 +10,7 @@ using ProductCatalog.Service.V1.Services;
 
 namespace ProductCatalog.Service.V1.Controllers;
 
-[Route("api/v1/auth")]
+[Route("api/v1/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
 public class AuthController : ExtendedController

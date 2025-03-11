@@ -37,7 +37,7 @@ public class NotEmptyAndNotNullAttribute : ValidationAttribute
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        var str = value as string;
+        var str = (value as string)?.Trim();
 
         if (AllowNull && str is null)
             return ValidationResult.Success;

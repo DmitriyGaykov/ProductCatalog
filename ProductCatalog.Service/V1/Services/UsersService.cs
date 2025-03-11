@@ -54,7 +54,7 @@ public class UsersService : IUsersService
                     ((u.LastName ?? string.Empty) + " " + u.FirstName).ToLower().Contains(q)
                 ) &&
                 (role == null || u.Role.ToLower().Equals(role)) &&
-                (email == null || u.Email.Equals(email)) &&
+                (email == null || (u.Email != null && u.Email.Equals(email))) &&
                 (password == null || u.PasswordHash.Equals(password)) &&
                 u.DeletedAt == null
             )
@@ -82,6 +82,7 @@ public class UsersService : IUsersService
     public async Task<User> RemoveAsync(User user)
     {
         user.DeletedAt = DateTime.Now;
+        user.Email = null;
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
         return user;
