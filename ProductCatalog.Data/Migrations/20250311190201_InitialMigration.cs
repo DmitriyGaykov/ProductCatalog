@@ -37,6 +37,7 @@ namespace ProductCatalog.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -111,8 +112,8 @@ namespace ProductCatalog.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedAt", "DeletedAt", "FirstName", "LastName", "ModifiedAt", "PasswordHash", "Role" },
-                values: new object[] { new Guid("a315fc17-df0a-4b53-a27d-58ca26d32418"), new DateTime(2025, 3, 11, 21, 6, 16, 11, DateTimeKind.Local).AddTicks(8681), null, "Администратор", null, null, "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef", "Admin" });
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "FirstName", "LastName", "ModifiedAt", "PasswordHash", "Role" },
+                values: new object[] { new Guid("5f44e8c8-859f-45a7-8780-dbc1539a2f08"), new DateTime(2025, 3, 11, 22, 2, 1, 387, DateTimeKind.Local).AddTicks(8481), null, "admin@mail.by", "Администратор", null, null, "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Blocks_AdministratorId",
@@ -138,6 +139,12 @@ namespace ProductCatalog.Data.Migrations
                 name: "IX_Products_UserId",
                 table: "Products",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />

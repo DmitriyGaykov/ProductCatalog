@@ -14,6 +14,10 @@ public class User
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
+    [EmailAddress]
+    public string Email { get; set; }
+
+    [Required]
     public string FirstName { get; set; }
     public string? LastName { get; set; }
 

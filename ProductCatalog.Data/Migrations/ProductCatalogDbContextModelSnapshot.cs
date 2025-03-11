@@ -141,6 +141,10 @@ namespace ProductCatalog.Data.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -161,13 +165,17 @@ namespace ProductCatalog.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a315fc17-df0a-4b53-a27d-58ca26d32418"),
-                            CreatedAt = new DateTime(2025, 3, 11, 21, 6, 16, 11, DateTimeKind.Local).AddTicks(8681),
+                            Id = new Guid("5f44e8c8-859f-45a7-8780-dbc1539a2f08"),
+                            CreatedAt = new DateTime(2025, 3, 11, 22, 2, 1, 387, DateTimeKind.Local).AddTicks(8481),
+                            Email = "admin@mail.by",
                             FirstName = "Администратор",
                             PasswordHash = "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef",
                             Role = "Admin"

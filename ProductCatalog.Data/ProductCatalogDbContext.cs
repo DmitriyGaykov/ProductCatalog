@@ -19,12 +19,15 @@ public class ProductCatalogDbContext : DbContext
 
     public ProductCatalogDbContext(DbContextOptions<ProductCatalogDbContext> options) : base(options)
     {
-        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
 
         modelBuilder.Entity<Block>()
             .HasOne(b => b.User)
@@ -48,6 +51,7 @@ public class ProductCatalogDbContext : DbContext
         var admin = new User()
         {
             FirstName = "Администратор",
+            Email = "admin@mail.by",
             PasswordHash = pwd,
             Role = Roles.Admin
         };
