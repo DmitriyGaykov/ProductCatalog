@@ -29,6 +29,10 @@ public class ProductCatalogDbContext : DbContext
             .HasIndex(u => u.Email)
             .IsUnique();
 
+        modelBuilder.Entity<Category>()
+            .HasIndex(c => c.Name)
+            .IsUnique();
+
         modelBuilder.Entity<Block>()
             .HasOne(b => b.User)
             .WithMany()  
