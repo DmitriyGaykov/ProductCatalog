@@ -57,4 +57,9 @@ public class BlocksService : IBlocksService
         await _context.SaveChangesAsync();
         return block;
     }
+
+    public Task<Block> UpdateAsync(Block entity)
+    {
+        throw new NotImplementedException();
+    }
 }

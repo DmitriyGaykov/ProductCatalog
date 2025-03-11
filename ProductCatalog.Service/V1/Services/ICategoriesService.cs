@@ -2,7 +2,6 @@
 
 namespace ProductCatalog.Service.V1.Services;
 
-public interface IBlocksService : IGrudService<Block> 
+public interface ICategoriesService : IGrudService<Category>
 {
-   
 }
