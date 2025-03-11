@@ -8,7 +8,7 @@ namespace ProductCatalog.Data.Models;
 
 public class Roles
 {
-    public static string User => "User";
-    public static string AdvancedUser => "AdvancedUser";
-    public static string Admin => "Admin";
+    public const string User = "User";
+    public const string AdvancedUser = "AdvancedUser";
+    public const string Admin = "Admin";
 }

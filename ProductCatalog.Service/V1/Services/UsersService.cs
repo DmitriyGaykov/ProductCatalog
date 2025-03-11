@@ -55,7 +55,8 @@ public class UsersService : IUsersService
                 ) &&
                 (role == null || u.Role.ToLower().Equals(role)) &&
                 (email == null || u.Email.Equals(email)) &&
-                (password == null || u.PasswordHash.Equals(password))
+                (password == null || u.PasswordHash.Equals(password)) &&
+                u.DeletedAt == null
             )
             .OrderBy(u => u.FirstName + u.LastName)
             .Skip(skip)
@@ -80,13 +81,15 @@ public class UsersService : IUsersService
 
     public async Task<User> RemoveAsync(User user)
     {
-        _context.Users.Remove(user);
+        user.DeletedAt = DateTime.Now;
+        _context.Users.Update(user);
         await _context.SaveChangesAsync();
         return user;
     }
 
     public async Task<User> UpdateAsync(User user)
     {
+        user.ModifiedAt = DateTime.Now;
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
         return user;

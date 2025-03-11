@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductCatalog.Data.Models;
 using ProductCatalog.Service.Api.Controllers;
+using ProductCatalog.Service.Filters;
 using ProductCatalog.Service.V1.Services;
 using System.Security.Claims;
 
@@ -22,6 +24,7 @@ public class UsersController : ExtendedController
     }
 
     [HttpGet]
+    [AuthAs]
     public async Task<IActionResult> FindAllAsync()
     {
         try
@@ -38,5 +41,17 @@ public class UsersController : ExtendedController
         }
     }
 
-    
+    [HttpPost]
+    [AuthAs(Roles.Admin)]
+    public async Task<IActionResult> AddUserAsync()
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
 }

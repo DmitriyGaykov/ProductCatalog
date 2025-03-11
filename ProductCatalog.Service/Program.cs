@@ -145,7 +145,8 @@ builder.Services.AddCors(options =>
 builder
     .Services
     .AddTransient<IJwtService, JwtService>()
-    .AddScoped<IUsersService, UsersService>();
+    .AddScoped<IUsersService, UsersService>()
+    .AddScoped<IBlocksService, BlocksService>();
 
 #endregion
 

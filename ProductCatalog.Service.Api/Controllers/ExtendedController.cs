@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductCatalog.Service.Api.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,11 +17,6 @@ public class ExtendedController : ControllerBase
 
     protected IActionResult BadRequest(Exception e)
     {
-        return BadRequest(new 
-        {
-            e.Message,
-            e.StackTrace,
-            e.InnerException,
-        });
+        return BadRequest(new ApiError(e));
     }
 }
