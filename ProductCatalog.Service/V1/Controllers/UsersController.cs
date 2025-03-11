@@ -47,7 +47,7 @@ public class UsersController : ExtendedController
 
     [HttpPost]
     [AuthAs(Roles.Admin)]
-    public async Task<IActionResult> AddUserAsync(AddUserDto dto)
+    public async Task<IActionResult> AddAsync(AddUserDto dto)
     {
         try
         {
@@ -78,7 +78,7 @@ public class UsersController : ExtendedController
 
     [HttpPatch("{userId:guid}")]
     [AuthAs(Roles.Admin)]
-    public async Task<IActionResult> UpdateUserAsync(Guid userId, UpdateUserDto dto)
+    public async Task<IActionResult> UpdateAsync(Guid userId, UpdateUserDto dto)
     {
         try
         {
@@ -98,7 +98,7 @@ public class UsersController : ExtendedController
 
     [HttpDelete("{userId:guid}")]
     [AuthAs(Roles.Admin)]
-    public async Task<IActionResult> DeleteUserAsync(Guid userId)
+    public async Task<IActionResult> DeleteAsync(Guid userId)
     {
         try
         {
