@@ -21,4 +21,8 @@ public static class ExceptionsText
     public const string EmailIsNotValid = "Введите валидную электронную почту";
     public const string PasswordIsNotValid = "Пароль должен содержать от 6 до 64 символов";
     public const string EmailWasRecerved = "Почта уже занята";
+    public const string BlockWasNotFound = "Такой блокировки не существует";
+    public const string BlockReasonIsNotValid = "Причина блокировки должна быть длиной от 2 до 300 символов";
+    public const string AdminCannotBlockYourself = "Вы не можете забокировать самого себя";
+    public const string UserHasBeenAlreadyBlocked = "Пользователь уже был заблокирован";
 }

@@ -47,6 +47,8 @@ public class BlocksService : IBlocksService
     {
         return _context
             .Blocks
+            .Include(b => b.User)
+            .Include(b => b.Administrator)
             .FirstOrDefaultAsync(b => b.Id.Equals(id));
     }
 

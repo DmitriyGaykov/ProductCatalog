@@ -93,16 +93,14 @@ builder.Services.AddSwaggerGen(options =>
     var filename = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
     var filepath = Path.Combine(AppContext.BaseDirectory, filename);
     options.IncludeXmlComments(filepath);
-});
 
-builder.Services.AddSwaggerGen(options =>
-{
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
         Description = "Please enter a valid token",
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -119,8 +117,6 @@ builder.Services.AddSwaggerGen(options =>
             new string[] {}
         }
     });
-
-    // Остальная настройка Swagger
 });
 
 

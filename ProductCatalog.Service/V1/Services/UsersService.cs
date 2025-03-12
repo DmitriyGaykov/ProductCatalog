@@ -72,11 +72,16 @@ public class UsersService : IUsersService
             .ToList();
     }
 
-    public Task<User?> FindByIdAsync(Guid id)
+    public async Task<User?> FindByIdAsync(Guid id)
     {
-        return _context
+        var user = await _context
             .Users
             .FirstOrDefaultAsync(u => u.Id.Equals(id));
+
+        if (user is not null)
+            user.PasswordHash = string.Empty;
+
+        return user;
     }
 
     public async Task<User> RemoveAsync(User user)

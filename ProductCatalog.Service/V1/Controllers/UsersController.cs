@@ -98,7 +98,7 @@ public class UsersController : ExtendedController
 
     [HttpDelete("{userId:guid}")]
     [AuthAs(Roles.Admin)]
-    public async Task<IActionResult> DeleteAsync(Guid userId)
+    public async Task<IActionResult> RemoveAsync(Guid userId)
     {
         try
         {

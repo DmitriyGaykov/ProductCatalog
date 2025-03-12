@@ -17,11 +17,13 @@ public class AuthController : ExtendedController
 {
     private readonly IJwtService _jwtService;
     private readonly IUsersService _usersService;
+    private readonly IBlocksService _blocksService;
 
-    public AuthController(IJwtService jwtService, IUsersService usersService)
+    public AuthController(IJwtService jwtService, IUsersService usersService, IBlocksService blocksService)
     {
         _jwtService = jwtService;
         _usersService = usersService;
+        _blocksService = blocksService;
     }
 
     [HttpPost]
@@ -42,6 +44,14 @@ public class AuthController : ExtendedController
 
             var user = users.First();
             var (token, expires) = _jwtService.GenerateJwtToken(user.Id.ToString());
+
+            var blocks = await _blocksService.FindAllAsync(new Dictionary<string, string?>
+            {
+                { "userid", user.Id.ToString() }
+            });
+
+            if (blocks.Count() > 0)
+                throw new Exception(ExceptionsText.UserWasBlocked + blocks.First().Reason);
 
             return Ok(new
             {

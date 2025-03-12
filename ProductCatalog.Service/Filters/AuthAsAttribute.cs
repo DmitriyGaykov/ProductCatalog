@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ProductCatalog.Service.Api.Controllers;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.V1.Services;
 using System.Net;
@@ -42,6 +43,8 @@ public class AuthAsAttribute : Attribute, IAsyncActionFilter
 
             if (_roles.Count() != 0 && !_roles.Any(r => r.Equals(user.Role)))
                 throw new Exception(ExceptionsText.YouHaveNotPermission);
+
+            context.HttpContext.Items[ExtendedController.UserHttpContextItem] = user;
 
             await next();
         }
