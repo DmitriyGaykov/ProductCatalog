@@ -12,10 +12,22 @@ using System.Text;
 using ProductCatalog.Service.Services;
 using ProductCatalog.Service.V1.Services;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+#region Logging
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/app_.log", rollingInterval: RollingInterval.Hour, fileSizeLimitBytes: 1024 * 1000 * 10)
+    .CreateLogger();
+
+builder.Host.UseSerilog(); 
+
+#endregion
 
 #region Sql Connection
 
@@ -165,6 +177,7 @@ using (var scope = app.Services.CreateScope())
 
 #endregion
 
+app.UseMiddleware<RemovePasswordHashMiddleware>();
 
 app.UseCors("AllowAllOrigins");
 
