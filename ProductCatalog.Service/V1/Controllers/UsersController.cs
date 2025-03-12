@@ -86,7 +86,12 @@ public class UsersController : ExtendedController
             if (user is null || user.DeletedAt is not null)
                 throw new Exception(ExceptionsText.UserWasNotFound);
 
-            user.PasswordHash = ShaHasher.Sha256(dto.Password);
+            if (dto.Password is not null)
+                user.PasswordHash = ShaHasher.Sha256(dto.Password);
+
+            if (dto.Role is Roles.User or Roles.AdvancedUser or Roles.Admin)
+                user.Role = dto.Role;
+
             user = await _usersService.UpdateAsync(user);
             return Ok(user);
         }

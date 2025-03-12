@@ -33,7 +33,7 @@ public class CategoriesService : ICategoriesService
     public async Task<IEnumerable<Category>> FindAllAsync(IDictionary<string, string?> queries)
     {
         queries.TryGetValue("name", out var name);
-        queries.TryGetValue("parentid", out var parentId);
+        //queries.TryGetValue("parentid", out var parentId);
         queries.TryGetValue("limit", out var s_limit);
         queries.TryGetValue("page", out var s_page);
 
@@ -41,11 +41,12 @@ public class CategoriesService : ICategoriesService
 
         return await _context
             .Categories
-            .Include(c => c.Parent)
-            .Include(c => c.Children)
+            //.Include(c => c.Parent)
+            //.Include(c => c.Children)
+            .Include(c => c.User)
             .Where(c =>
                 (name == null || c.Name.ToLower().Equals(name.Trim().ToLower())) &&
-                (parentId == null || c.ParentId.Equals(new Guid(parentId))) &&
+                //(parentId == null || c.ParentId.Equals(new Guid(parentId))) &&
                 c.DeletedAt == null
             )
             .OrderBy(c => c.Name)
@@ -58,8 +59,9 @@ public class CategoriesService : ICategoriesService
     {
         return _context
             .Categories
-            .Include(c => c.Parent)
-            .Include(c => c.Children)
+            //.Include(c => c.Parent)
+            //.Include(c => c.Children)
+            .Include(c => c.User)
             .FirstOrDefaultAsync(c => c.Id.Equals(id));
     }
 

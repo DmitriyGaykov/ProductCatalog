@@ -1,7 +1,7 @@
 ﻿using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Api.Validation.Attributes;
 
-namespace ProductCatalog.Service.V1.Dto.Auth.Blocks;
+namespace ProductCatalog.Service.V1.Dto.Blocks;
 
 public class AddBlockDto
 {

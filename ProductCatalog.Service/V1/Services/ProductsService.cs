@@ -25,12 +25,13 @@ public class ProductsService : IProductsService
     {
         queries.TryGetValue("userid", out var userId);
         queries.TryGetValue("categoryid", out var categoryId);
-        queries.TryGetValue("limit", out var s_limit);
-        queries.TryGetValue("page", out var s_page);
         queries.TryGetValue("q", out var q);
-        queries.TryGetValue("description", out var description);
         queries.TryGetValue("pricefrom", out var s_priceFrom);
         queries.TryGetValue("priceto", out var s_priceTo);
+        queries.TryGetValue("sortby", out var sortBy);
+        queries.TryGetValue("ordertype", out var ordertype);
+        queries.TryGetValue("limit", out var s_limit);
+        queries.TryGetValue("page", out var s_page);
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit);
 
@@ -40,13 +41,46 @@ public class ProductsService : IProductsService
         if (!int.TryParse(s_priceTo, out var priceTo))
             priceTo = int.MaxValue;
 
-        throw new NotImplementedException();
+        var filteredData = _context
+            .Products
+            .Include(p => p.User)
+            .Where(p =>
+                p.DeletedAt == null &&
+                (userId == null || p.UserId.Equals(new Guid(userId))) &&
+                (categoryId == null || p.CategoryId.Equals(new Guid(categoryId))) &&
+                (q == null || p.Name.ToLower().Contains(q) || p.Description.ToLower().Contains(q) || (p.Notes != null && p.Notes.ToLower().Contains(q))) &&
+                (p.Price >= priceFrom && p.Price <= priceTo)
+            )
+            .AsQueryable();
+
+        ordertype ??= "asc";
+
+        switch (sortBy)
+        {
+            case "price":
+                filteredData = ordertype.Equals("desc") ?
+                    filteredData.OrderByDescending(p => p.Price) :
+                    filteredData.OrderBy(p => p.Price);
+                break;
+            case "name":
+            default:
+                filteredData = ordertype.Equals("desc") ?
+                   filteredData.OrderByDescending(p => p.Name) :
+                   filteredData.OrderBy(p => p.Name);
+                break;
+        }
+
+        return await filteredData
+            .Skip(skip)
+            .Take(limit)
+            .ToListAsync();
     }
 
     public Task<Product?> FindByIdAsync(Guid id)
     {
         return _context
             .Products
+            .Include(p => p.User)
             .FirstOrDefaultAsync(p => p.Id.Equals(id));
     }
 
@@ -54,6 +88,7 @@ public class ProductsService : IProductsService
     {
         queries.TryGetValue("categoryid", out var categoryId);
         queries.TryGetValue("ids", out var ids);
+        queries.TryGetValue("advanceduserid", out var advancedUserId);
 
         var productIds = ids?
             .Split("|")
@@ -64,9 +99,11 @@ public class ProductsService : IProductsService
 
         await _context
             .Products
+            .Include(p => p.User)
             .Where(p =>
                 (categoryId == null || p.CategoryId.Equals(new Guid(categoryId))) &&
-                (ids == null || (productIds != null && productIds.Contains(p.Id)))
+                (ids == null || (productIds != null && productIds.Contains(p.Id))) &&
+                (advancedUserId == null || p.User.Role.Equals(Roles.User) || p.UserId.Equals(new Guid(advancedUserId)))
             )
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(p => p.DeletedAt, DateTime.Now)

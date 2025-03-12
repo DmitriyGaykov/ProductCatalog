@@ -12,9 +12,7 @@ public class Category
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    [ForeignKey("Parent")]
     public Guid? ParentId { get; set; } = null;
-    [ForeignKey("User")]
     public Guid UserId { get; set; }
 
     [Required]
@@ -25,6 +23,6 @@ public class Category
     public DateTime? DeletedAt { get; set; } = null;
 
     public virtual User? User { get; set; }
-    public virtual Category? Parent { get; set; }
-    public virtual ICollection<Category> Children { get; set; } = new List<Category>();
+    //public virtual Category? Parent { get; set; }
+    //public virtual ICollection<Category> Children { get; set; } = new List<Category>();
 }

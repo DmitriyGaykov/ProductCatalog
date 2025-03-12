@@ -83,8 +83,6 @@ namespace ProductCatalog.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.HasIndex("ParentId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Categories");
@@ -181,8 +179,8 @@ namespace ProductCatalog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("65dda137-43d9-41f3-ad31-1188b13907b9"),
-                            CreatedAt = new DateTime(2025, 3, 12, 21, 59, 3, 789, DateTimeKind.Local).AddTicks(6569),
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(2025, 3, 13, 0, 9, 1, 478, DateTimeKind.Local).AddTicks(4108),
                             Email = "admin@mail.by",
                             FirstName = "Администратор",
                             PasswordHash = "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef",
@@ -211,17 +209,11 @@ namespace ProductCatalog.Data.Migrations
 
             modelBuilder.Entity("ProductCatalog.Data.Models.Category", b =>
                 {
-                    b.HasOne("ProductCatalog.Data.Models.Category", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
-
                     b.HasOne("ProductCatalog.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Parent");
 
                     b.Navigation("User");
                 });
@@ -243,11 +235,6 @@ namespace ProductCatalog.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ProductCatalog.Data.Models.Category", b =>
-                {
-                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

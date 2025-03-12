@@ -30,4 +30,14 @@ public static class ExceptionsText
     public const string CategoryNameWasReserved = "Категория с таким названием уже есть";
     public const string CategoryWasNotFound = "Категория не найдена";
     public const string CategoryIsNotYours = "Вы не создатель категории";
+    public const string ProductIdWasNotProvided = "Предоставьте идентификатор продукта";
+    public const string ProductWasNotFound = "Такого продукта не существует";
+    public const string AdvancedUserCannotRemoveProductOfAnotherAdvancedUser = "Вы не можете удалить продукт другого продвинутого пользователя";
+    public const string ProductNameIsNotValid = "Название продукта должно состоять от 1 до 100 символов";
+    public const string ProductDescriptionIsNotValid = "Название продукта должно состоять от 1 до 300 символов";
+    public const string ProductNotesIsNotValid = "Примечание продукта должно состоять от 1 до 300 символов";
+    public const string ProductSpecialNotesIsNotValid = "Специальное примечание продукта должно состоять до 300 символов";
+    public const string ProductPriceIsNotValid = "Цена на продукт должна быть от 10 копеек до 10 тысяч рублей";
+    public const string ProductCategoryIsRequired = "Заполните поле категории";
+    public const string ProductIsNotYours = "Это не ваш продукт";
 }

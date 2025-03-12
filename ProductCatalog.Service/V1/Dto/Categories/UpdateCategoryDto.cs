@@ -10,5 +10,5 @@ public class UpdateCategoryDto
     [RegularExpression("^[a-zA-Zа-яА-Я]+$", ErrorMessage = ExceptionsText.CategoryNameIsNotValid)]
     public string? Name { get; set; }
 
-    public Guid? ParentId { get; set; } = null;
+    //public Guid? ParentId { get; set; } = null;
 }

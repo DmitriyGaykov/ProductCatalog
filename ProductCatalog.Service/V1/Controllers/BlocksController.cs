@@ -6,8 +6,8 @@ using ProductCatalog.Data.Models;
 using ProductCatalog.Service.V1.Controllers;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Filters;
-using ProductCatalog.Service.V1.Dto.Auth.Blocks;
 using ProductCatalog.Service.V1.Services;
+using ProductCatalog.Service.V1.Dto.Blocks;
 
 namespace ProductCatalog.Service.V1.Controllers;
 

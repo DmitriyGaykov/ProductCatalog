@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ProductCatalog.Data.Models;
 using ProductCatalog.Service.Api.Crypto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductCatalog.Data;
 
@@ -35,15 +29,28 @@ public class ProductCatalogDbContext : DbContext
 
         modelBuilder.Entity<Block>()
             .HasOne(b => b.User)
-            .WithMany()  
+            .WithMany()
             .HasForeignKey(b => b.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<Block>()
             .HasOne(b => b.Administrator)
-            .WithMany() 
+            .WithMany()
             .HasForeignKey(b => b.AdministratorId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Category>()
+            .HasOne(c => c.User)
+            .WithMany()
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.NoAction);  // Нет каскадного удаления для связи User
+
+        //modelBuilder.Entity<Category>()
+        //    .HasOne(c => c.Parent)
+        //    .WithMany(c => c.Children)
+        //    .HasForeignKey(c => c.ParentId)
+        //    .OnDelete(DeleteBehavior.NoAction);  // Нет каскадного удаления для связи Parent
+
 
         CreateDefaultAdministrator(modelBuilder);
     }
@@ -54,6 +61,7 @@ public class ProductCatalogDbContext : DbContext
 
         var admin = new User()
         {
+            Id = new Guid("00000000-0000-0000-0000-000000000001"),
             FirstName = "Администратор",
             Email = "admin@mail.by",
             PasswordHash = pwd,

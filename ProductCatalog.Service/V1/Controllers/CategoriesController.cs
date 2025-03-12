@@ -57,22 +57,22 @@ public class CategoriesController : ExtendedController
 
             Category? parent = null;
 
-            if (dto.ParentId is not null)
-            {
-                parent = await _categoriesService.FindByIdAsync(dto.ParentId.Value);
-                if (parent is null)
-                    throw new Exception(ExceptionsText.CategoryWasNotFound + $" ({dto.ParentId.Value})");
-            }
+            //if (dto.ParentId is not null)
+            //{
+            //    parent = await _categoriesService.FindByIdAsync(dto.ParentId.Value);
+            //    if (parent is null)
+            //        throw new Exception(ExceptionsText.CategoryWasNotFound + $" ({dto.ParentId.Value})");
+            //}
 
             var category = new Category()
             {
                 Name = dto.Name.Trim(),
-                ParentId = dto.ParentId,
+                //ParentId = dto.ParentId,
                 UserId = CurrentUser!.Id
             };
 
             category = await _categoriesService.AddAsync(category);
-            category.Parent = parent;
+            //category.Parent = parent;
 
             return Ok(category);
         }
@@ -126,15 +126,15 @@ public class CategoriesController : ExtendedController
             if (dto.Name is not null)
                 category.Name = dto.Name.Trim(); 
 
-            if (dto.ParentId is not null && !dto.ParentId.Value.Equals(category.ParentId))
-            {
-                var parent = await _categoriesService.FindByIdAsync(dto.ParentId.Value);
-                if (parent is null)
-                    throw new Exception(ExceptionsText.CategoryWasNotFound + $" ({dto.ParentId.Value})");
+            //if (dto.ParentId is not null && !dto.ParentId.Value.Equals(category.ParentId))
+            //{
+            //    var parent = await _categoriesService.FindByIdAsync(dto.ParentId.Value);
+            //    if (parent is null)
+            //        throw new Exception(ExceptionsText.CategoryWasNotFound + $" ({dto.ParentId.Value})");
 
-                category.ParentId = parent.Id;
-                category.Parent = parent;
-            }
+            //    category.ParentId = parent.Id;
+            //    category.Parent = parent;
+            //}
 
             category = await _categoriesService.UpdateAsync(category);
 

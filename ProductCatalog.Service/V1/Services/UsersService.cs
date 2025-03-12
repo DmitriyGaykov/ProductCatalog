@@ -45,7 +45,7 @@ public class UsersService : IUsersService
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit);
 
-        var users =  await _context
+        return await _context
             .Users
             .Where(u =>
                 (ids == null || (userIds != null && userIds.Contains(u.Id))) &&
@@ -63,26 +63,13 @@ public class UsersService : IUsersService
             .Skip(skip)
             .Take(limit)
             .ToListAsync();
-
-        return users
-            .Select(u =>
-            {
-                u.PasswordHash = string.Empty;
-                return u;
-            })
-            .ToList();
     }
 
     public async Task<User?> FindByIdAsync(Guid id)
     {
-        var user = await _context
+        return await _context
             .Users
             .FirstOrDefaultAsync(u => u.Id.Equals(id));
-
-        if (user is not null)
-            user.PasswordHash = string.Empty;
-
-        return user;
     }
 
     public Task RemoveAsync(IDictionary<string, string?> queries)

@@ -12,8 +12,8 @@ using ProductCatalog.Data;
 namespace ProductCatalog.Data.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    [Migration("20250312183018_Categories_AddField_UserId")]
-    partial class Categories_AddField_UserId
+    [Migration("20250312204632_Categories_CancelCascadingDelete")]
+    partial class Categories_CancelCascadingDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,6 +112,9 @@ namespace ProductCatalog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -124,9 +127,6 @@ namespace ProductCatalog.Data.Migrations
 
                     b.Property<string>("SpecialNotes")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -184,8 +184,8 @@ namespace ProductCatalog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("69deaf03-c893-417a-b406-74b6a575719b"),
-                            CreatedAt = new DateTime(2025, 3, 12, 21, 30, 17, 371, DateTimeKind.Local).AddTicks(2149),
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(2025, 3, 12, 23, 46, 32, 375, DateTimeKind.Local).AddTicks(5517),
                             Email = "admin@mail.by",
                             FirstName = "Администратор",
                             PasswordHash = "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef",
@@ -216,12 +216,13 @@ namespace ProductCatalog.Data.Migrations
                 {
                     b.HasOne("ProductCatalog.Data.Models.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ProductCatalog.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Parent");

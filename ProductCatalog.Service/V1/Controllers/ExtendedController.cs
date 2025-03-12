@@ -13,6 +13,7 @@ namespace ProductCatalog.Service.V1.Controllers;
 public class ExtendedController : ControllerBase
 {
     public const string UserHttpContextItem = "App-User";
+    public const string ProductHttpContextItem = "App-Product";
 
     protected IDictionary<string, string?> Queries => Request
                .Query
@@ -24,4 +25,5 @@ public class ExtendedController : ControllerBase
     }
 
     protected User? CurrentUser => HttpContext.Items[UserHttpContextItem] as User;
+    protected Product? Product => HttpContext.Items[ProductHttpContextItem] as Product;
 }

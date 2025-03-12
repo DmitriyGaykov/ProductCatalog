@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProductCatalog.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Categories_AddField_UserId : Migration
+    public partial class Categories_CancelCascadingDelete : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,6 +15,11 @@ namespace ProductCatalog.Data.Migrations
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: new Guid("a9220cbe-2b78-4f58-9fcf-1fa5b41cd95e"));
+
+            migrationBuilder.RenameColumn(
+                name: "UpdatedAt",
+                table: "Products",
+                newName: "ModifiedAt");
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
@@ -26,7 +31,7 @@ namespace ProductCatalog.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "FirstName", "LastName", "ModifiedAt", "PasswordHash", "Role" },
-                values: new object[] { new Guid("69deaf03-c893-417a-b406-74b6a575719b"), new DateTime(2025, 3, 12, 21, 30, 17, 371, DateTimeKind.Local).AddTicks(2149), null, "admin@mail.by", "Администратор", null, null, "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef", "Admin" });
+                values: new object[] { new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(2025, 3, 12, 23, 46, 32, 375, DateTimeKind.Local).AddTicks(5517), null, "admin@mail.by", "Администратор", null, null, "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_UserId",
@@ -38,8 +43,7 @@ namespace ProductCatalog.Data.Migrations
                 table: "Categories",
                 column: "UserId",
                 principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
@@ -56,11 +60,16 @@ namespace ProductCatalog.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "Users",
                 keyColumn: "Id",
-                keyValue: new Guid("69deaf03-c893-417a-b406-74b6a575719b"));
+                keyValue: new Guid("00000000-0000-0000-0000-000000000001"));
 
             migrationBuilder.DropColumn(
                 name: "UserId",
                 table: "Categories");
+
+            migrationBuilder.RenameColumn(
+                name: "ModifiedAt",
+                table: "Products",
+                newName: "UpdatedAt");
 
             migrationBuilder.InsertData(
                 table: "Users",
