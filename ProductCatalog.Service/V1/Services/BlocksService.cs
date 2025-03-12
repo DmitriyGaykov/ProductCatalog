@@ -52,6 +52,11 @@ public class BlocksService : IBlocksService
             .FirstOrDefaultAsync(b => b.Id.Equals(id));
     }
 
+    public Task RemoveAsync(IDictionary<string, string?> queries)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Block> RemoveAsync(Block block)
     {
         block.DeletedAt = DateTime.Now;

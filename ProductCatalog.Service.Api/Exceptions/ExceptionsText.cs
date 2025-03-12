@@ -25,4 +25,9 @@ public static class ExceptionsText
     public const string BlockReasonIsNotValid = "Причина блокировки должна быть длиной от 2 до 300 символов";
     public const string AdminCannotBlockYourself = "Вы не можете забокировать самого себя";
     public const string UserHasBeenAlreadyBlocked = "Пользователь уже был заблокирован";
+    public const string CategoryNameSizeIsNotValid = "Длина названия категории должна быть от 1 до 50 символов";
+    public const string CategoryNameIsNotValid = "Название категории должно состоять из букв русского либо английского алфавита";
+    public const string CategoryNameWasReserved = "Категория с таким названием уже есть";
+    public const string CategoryWasNotFound = "Категория не найдена";
+    public const string CategoryIsNotYours = "Вы не создатель категории";
 }

@@ -1,30 +1,77 @@
-﻿using ProductCatalog.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductCatalog.Data;
+using ProductCatalog.Data.Models;
+using ProductCatalog.Service.Api.Utils.Pagination;
 
 namespace ProductCatalog.Service.V1.Services;
 
 public class CategoriesService : ICategoriesService
 {
-    public Task<Category> AddAsync(Category category)
+    private readonly ProductCatalogDbContext _context;
+
+    public CategoriesService(ProductCatalogDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<Category> RemoveAsync(Category category)
+    public async Task<Category> AddAsync(Category category)
     {
-        throw new NotImplementedException();
+        await _context.Categories.AddAsync(category);
+        await _context.SaveChangesAsync();
+        return category;
     }
 
-    public Task<IEnumerable<Category>> FindAllAsync(IDictionary<string, string?> queries)
+    public async Task<Category> RemoveAsync(Category category)
     {
-        throw new NotImplementedException();
+        category.DeletedAt = DateTime.Now;
+        category.Name += " removed " + Guid.NewGuid();
+        _context.Categories.Update(category);
+        await _context.SaveChangesAsync();
+        return category;
+    }
+
+    public async Task<IEnumerable<Category>> FindAllAsync(IDictionary<string, string?> queries)
+    {
+        queries.TryGetValue("name", out var name);
+        queries.TryGetValue("parentid", out var parentId);
+        queries.TryGetValue("limit", out var s_limit);
+        queries.TryGetValue("page", out var s_page);
+
+        var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit, 100);
+
+        return await _context
+            .Categories
+            .Include(c => c.Parent)
+            .Include(c => c.Children)
+            .Where(c =>
+                (name == null || c.Name.ToLower().Equals(name.Trim().ToLower())) &&
+                (parentId == null || c.ParentId.Equals(new Guid(parentId))) &&
+                c.DeletedAt == null
+            )
+            .OrderBy(c => c.Name)
+            .Skip(skip)
+            .Take(limit)
+            .ToListAsync();
     }
 
     public Task<Category?> FindByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return _context
+            .Categories
+            .Include(c => c.Parent)
+            .Include(c => c.Children)
+            .FirstOrDefaultAsync(c => c.Id.Equals(id));
     }
 
-    public Task<Category> UpdateAsync(Category category)
+    public async Task<Category> UpdateAsync(Category category)
+    {
+        category.ModifiedAt = DateTime.Now;
+        _context.Categories.Update(category);
+        await _context.SaveChangesAsync();
+        return category;
+    }
+
+    public Task RemoveAsync(IDictionary<string, string?> queries)
     {
         throw new NotImplementedException();
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ProductCatalog.Service.Api.Controllers;
+using ProductCatalog.Service.V1.Controllers;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.V1.Services;
 using System.Net;

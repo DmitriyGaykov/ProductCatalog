@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductCatalog.Service.Api.Controllers;
+namespace ProductCatalog.Service.V1.Controllers;
 
 public class ExtendedController : ControllerBase
 {

@@ -40,6 +40,7 @@ public class UsersService : IUsersService
             .Split("|")
             ?.Where(id => Guid.TryParse(id, out var userId))
             .Select(Guid.Parse)
+            .Distinct()
             .ToList();
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit);
@@ -82,6 +83,11 @@ public class UsersService : IUsersService
             user.PasswordHash = string.Empty;
 
         return user;
+    }
+
+    public Task RemoveAsync(IDictionary<string, string?> queries)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<User> RemoveAsync(User user)

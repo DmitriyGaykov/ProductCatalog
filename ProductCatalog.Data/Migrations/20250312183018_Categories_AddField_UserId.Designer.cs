@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductCatalog.Data;
 
@@ -11,9 +12,11 @@ using ProductCatalog.Data;
 namespace ProductCatalog.Data.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    partial class ProductCatalogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250312183018_Categories_AddField_UserId")]
+    partial class Categories_AddField_UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,9 +112,6 @@ namespace ProductCatalog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -124,6 +124,9 @@ namespace ProductCatalog.Data.Migrations
 
                     b.Property<string>("SpecialNotes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -181,8 +184,8 @@ namespace ProductCatalog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("65dda137-43d9-41f3-ad31-1188b13907b9"),
-                            CreatedAt = new DateTime(2025, 3, 12, 21, 59, 3, 789, DateTimeKind.Local).AddTicks(6569),
+                            Id = new Guid("69deaf03-c893-417a-b406-74b6a575719b"),
+                            CreatedAt = new DateTime(2025, 3, 12, 21, 30, 17, 371, DateTimeKind.Local).AddTicks(2149),
                             Email = "admin@mail.by",
                             FirstName = "Администратор",
                             PasswordHash = "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef",

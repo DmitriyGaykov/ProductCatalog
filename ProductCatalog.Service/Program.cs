@@ -143,7 +143,8 @@ builder
     .AddTransient<IJwtService, JwtService>()
     .AddScoped<IUsersService, UsersService>()
     .AddScoped<IBlocksService, BlocksService>()
-    .AddScoped<ICategoriesService, CategoriesService>();
+    .AddScoped<ICategoriesService, CategoriesService>()
+    .AddScoped<IProductsService, ProductsService>();
 
 #endregion
 

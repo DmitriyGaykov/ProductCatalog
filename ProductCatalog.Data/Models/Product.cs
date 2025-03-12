@@ -28,7 +28,7 @@ public class Product
     public Guid UserId { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime? UpdatedAt { get; set; } = null;
+    public DateTime? ModifiedAt { get; set; } = null;
     public DateTime? DeletedAt { get; set; } = null;    
 
     public virtual Category? Category { get; set; }

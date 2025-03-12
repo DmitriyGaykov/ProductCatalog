@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using ProductCatalog.Data.Models;
-using ProductCatalog.Service.Api.Controllers;
+using ProductCatalog.Service.V1.Controllers;
 using ProductCatalog.Service.Api.Crypto;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Filters;

@@ -10,10 +10,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="ProductCatalog.Data">
-      <HintPath>..\ProductCatalog.Data\bin\Debug\net8.0\ProductCatalog.Data.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

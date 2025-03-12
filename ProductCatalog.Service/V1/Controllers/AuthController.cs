@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProductCatalog.Service.Api.Controllers;
+using ProductCatalog.Service.V1.Controllers;
 using ProductCatalog.Service.Api.Crypto;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Services;

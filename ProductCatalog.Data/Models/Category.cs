@@ -14,6 +14,8 @@ public class Category
 
     [ForeignKey("Parent")]
     public Guid? ParentId { get; set; } = null;
+    [ForeignKey("User")]
+    public Guid UserId { get; set; }
 
     [Required]
     public string Name { get; set; }
@@ -22,6 +24,7 @@ public class Category
     public DateTime? ModifiedAt { get; set; } = null;
     public DateTime? DeletedAt { get; set; } = null;
 
+    public virtual User? User { get; set; }
     public virtual Category? Parent { get; set; }
     public virtual ICollection<Category> Children { get; set; } = new List<Category>();
 }

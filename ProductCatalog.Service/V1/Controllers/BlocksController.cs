@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductCatalog.Data.Models;
-using ProductCatalog.Service.Api.Controllers;
+using ProductCatalog.Service.V1.Controllers;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Filters;
-using ProductCatalog.Service.V1.Dto.Blocks;
+using ProductCatalog.Service.V1.Dto.Auth.Blocks;
 using ProductCatalog.Service.V1.Services;
 
 namespace ProductCatalog.Service.V1.Controllers;
