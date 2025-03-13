@@ -20,11 +20,16 @@ public class BlocksController : ExtendedController
 {
     private readonly IBlocksService _blocksService;
     private readonly IUsersService _usersService;
+    private readonly IProductsService _productsService;
+    private readonly ICategoriesService _categoriesService;
 
-    public BlocksController(IBlocksService blocksService, IUsersService usersService)
+    public BlocksController(IBlocksService blocksService, IUsersService usersService, IProductsService productsService, ICategoriesService categoriesService)
     {
         _blocksService = blocksService;
         _usersService = usersService;
+        _blocksService = blocksService;
+        _categoriesService = categoriesService;
+        _productsService = productsService;
     }
 
     [HttpGet]
@@ -71,6 +76,17 @@ public class BlocksController : ExtendedController
             };
 
             block = await _blocksService.AddAsync(block);
+
+            var query = new Dictionary<string, string?>
+            {
+                { "userid", user.Id.ToString() }
+            };
+
+            await _productsService
+                .RemoveAsync(query);
+
+            await _categoriesService
+                .RemoveAsync(query);
 
             block.User = user;
             block.Administrator = admin;

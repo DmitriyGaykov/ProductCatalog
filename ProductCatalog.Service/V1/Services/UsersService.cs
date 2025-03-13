@@ -45,6 +45,12 @@ public class UsersService : IUsersService
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit);
 
+        var blockedUsers = _context
+            .Blocks
+            .Where(b => b.DeletedAt == null)
+            .Select(b => b.UserId)
+            .Distinct();
+
         return await _context
             .Users
             .Where(u =>
@@ -57,6 +63,7 @@ public class UsersService : IUsersService
                 (role == null || u.Role.ToLower().Equals(role)) &&
                 (email == null || (u.Email != null && u.Email.Equals(email))) &&
                 (password == null || u.PasswordHash.Equals(password)) &&
+                !blockedUsers.Contains(u.Id) &&
                 u.DeletedAt == null
             )
             .OrderBy(u => u.FirstName + u.LastName)

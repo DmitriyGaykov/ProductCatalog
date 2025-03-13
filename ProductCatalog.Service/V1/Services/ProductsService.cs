@@ -87,6 +87,7 @@ public class ProductsService : IProductsService
     public async Task RemoveAsync(IDictionary<string, string?> queries)
     {
         queries.TryGetValue("categoryid", out var categoryId);
+        queries.TryGetValue("userid", out var userId);
         queries.TryGetValue("ids", out var ids);
         queries.TryGetValue("advanceduserid", out var advancedUserId);
 
@@ -101,6 +102,7 @@ public class ProductsService : IProductsService
             .Products
             .Include(p => p.User)
             .Where(p =>
+                (userId == null || p.UserId.Equals(new Guid(userId))) &&
                 (categoryId == null || p.CategoryId.Equals(new Guid(categoryId))) &&
                 (ids == null || (productIds != null && productIds.Contains(p.Id))) &&
                 (advancedUserId == null || p.User.Role.Equals(Roles.User) || p.UserId.Equals(new Guid(advancedUserId)))

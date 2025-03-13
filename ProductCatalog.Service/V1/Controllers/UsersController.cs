@@ -1,16 +1,12 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using ProductCatalog.Data.Models;
-using ProductCatalog.Service.V1.Controllers;
 using ProductCatalog.Service.Api.Crypto;
 using ProductCatalog.Service.Api.Exceptions;
 using ProductCatalog.Service.Filters;
 using ProductCatalog.Service.V1.Dto.Users;
 using ProductCatalog.Service.V1.Services;
-using System.Security.Claims;
 
 namespace ProductCatalog.Service.V1.Controllers;
 
@@ -21,10 +17,14 @@ namespace ProductCatalog.Service.V1.Controllers;
 public class UsersController : ExtendedController
 {
     private readonly IUsersService _usersService;
+    private readonly IProductsService _productsService;
+    private readonly ICategoriesService _categoriesService;
 
-    public UsersController(IUsersService usersService)
+    public UsersController(IUsersService usersService, IProductsService productsService, ICategoriesService categoriesService)
     {
         _usersService = usersService;
+        _productsService = productsService;
+        _categoriesService = categoriesService;
     }
 
     [HttpGet]
@@ -112,6 +112,18 @@ public class UsersController : ExtendedController
                 throw new Exception(ExceptionsText.UserWasNotFound);
 
             user = await _usersService.RemoveAsync(user);
+
+            var query = new Dictionary<string, string?>
+            {
+                { "userid", user.Id.ToString() }
+            };
+
+            await _productsService
+                .RemoveAsync(query);
+
+            await _categoriesService
+                .RemoveAsync(query);
+
             return Ok(user);
         }
         catch (Exception e)

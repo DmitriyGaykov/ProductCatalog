@@ -73,8 +73,16 @@ public class CategoriesService : ICategoriesService
         return category;
     }
 
-    public Task RemoveAsync(IDictionary<string, string?> queries)
+    public async Task RemoveAsync(IDictionary<string, string?> queries)
     {
-        throw new NotImplementedException();
+        queries.TryGetValue("userid", out var userId);
+
+        await _context
+            .Categories
+            .ExecuteUpdateAsync(setters => 
+                setters
+                    .SetProperty(c => c.DeletedAt, DateTime.Now)
+                    .SetProperty(c => c.Name, c => c.Name + " removed " + Guid.NewGuid())
+            );
     }
 }
