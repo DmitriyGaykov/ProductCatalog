@@ -1,0 +1,86 @@
+:root {
+  --first-bg-color: #e6e6e6;
+  --second-bg-color: #dfdfdf;
+
+  --text-blur-dark-bg: #15151530;
+
+  --text-color: #1f1f1f;
+
+  --text-size-1: 23px;
+  --text-size-2: 18px;
+  --text-size-3: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  transition: all .3s ease-in-out;
+}
+
+.first-bg-color {
+  background-color: var(--first-bg-color);
+}
+
+.second-bg-color {
+  background-color: var(--second-bg-color);
+}
+
+.text-color {
+  color: var(--text-color);
+}
+
+.text-size-1 {
+  font-size: var(--text-size-1);
+}
+
+.text-size-2 {
+  font-size: var(--text-size-2);
+}
+
+.text-size-3 {
+  font-size: var(--text-size-3);
+}
+
+.max-width-300 {
+  max-width: 300px;
+}
+
+.max-width-350 {
+  max-width: 350px;
+}
+
+.max-width-400 {
+  max-width: 400px;
+}
+
+.max-width-1500 {
+  max-width: 1500px;
+}
+
+.width-80 {
+  width: 80px;
+}
+
+.width-150 {
+  width: 150px;
+}
+
+.width-250 {
+  width: 250px;
+}
+
+.width-1500 {
+  width: 1500px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.blur-dark-bg {
+  background-color: var(--text-blur-dark-bg);
+  backdrop-filter: blur(6px);
+}

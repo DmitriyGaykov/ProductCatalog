@@ -56,7 +56,8 @@ public class AuthController : ExtendedController
             return Ok(new
             {
                 accessToken = token,
-                expires
+                expiresAt = expires,
+                user
             });
         }
         catch (Exception e)
