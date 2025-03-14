@@ -1,3 +1,5 @@
+import {Block} from "./block.ts";
+
 export const Roles = {
     User: "User",
     AdvancedUser: "AdvancedUser",
@@ -11,6 +13,8 @@ export interface User {
     lastName: string;
     role: string;
     createdAt: string;
-    updatedAt: string;
+    deletedAt: string;
     modifiedAt: string;
+
+    blocks?: Block[];
 }

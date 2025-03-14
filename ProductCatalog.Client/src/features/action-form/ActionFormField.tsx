@@ -8,6 +8,7 @@ export type ActionFormFieldProps = {
   inputClassName?: string,
   defaultValue?: string,
   type?: string,
+  options?: string[]
 }
 
 export const ActionFormField: FC<ActionFormFieldProps> = ({
@@ -17,7 +18,8 @@ export const ActionFormField: FC<ActionFormFieldProps> = ({
                                                             labelClassName,
                                                             inputClassName,
                                                             defaultValue,
-                                                            type
+                                                            type,
+                                                            options
                                                           }) => {
   useEffect(() => {
     if (defaultValue)
@@ -27,10 +29,22 @@ export const ActionFormField: FC<ActionFormFieldProps> = ({
   return (
     <div className={`d-flex align-items-center justify-content-between gap-1 w-100 ${className || ""}`}>
       <span className={`text-size-3 text-color ${labelClassName}`}>{label}</span>
-      <input className={`form-text rounded-2 p-1 text-size-3 text-color ${inputClassName || ""}`}
-             type={type}
-             defaultValue={defaultValue}
-             onChange={e => onValueChanged?.(e.target.value)}/>
+      {
+        type !== 'select' ?
+          <input className={`form-text rounded-2 p-1 text-size-3 text-color ${inputClassName || ""}`}
+                 type={type}
+                 defaultValue={defaultValue}
+                 onChange={e => onValueChanged?.(e.target.value)}/> :
+          <select className={`form-text rounded-2 p-1 text-size-3 text-color ${inputClassName || ""}`}
+                  defaultValue={defaultValue}
+                  onChange={e => onValueChanged?.(e.target.value)}>
+            {
+              options?.map(o => (
+                <option key={o}>{o}</option>
+              ))
+            }
+          </select>
+      }
     </div>
   )
 }

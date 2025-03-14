@@ -29,7 +29,7 @@ public class ProductCatalogDbContext : DbContext
 
         modelBuilder.Entity<Block>()
             .HasOne(b => b.User)
-            .WithMany()
+            .WithMany(u => u.Blocks)
             .HasForeignKey(b => b.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 

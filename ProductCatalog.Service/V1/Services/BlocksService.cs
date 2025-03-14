@@ -29,7 +29,7 @@ public class BlocksService : IBlocksService
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit);
 
-        return await _context
+        var query = _context
             .Blocks
             .Include(b => b.User)
             .Include(b => b.Administrator)
@@ -37,6 +37,11 @@ public class BlocksService : IBlocksService
                 (userId == null || b.UserId.Equals(new Guid(userId))) &&
                 b.DeletedAt == null
             )
+            .AsQueryable();
+
+        queries[WebApiConfig.CountElementsKey] = (await query.CountAsync()).ToString();
+
+        return await query
             .OrderByDescending(b => b.CreatedAt)
             .Skip(skip)
             .Take(limit)

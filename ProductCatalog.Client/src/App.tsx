@@ -1,14 +1,20 @@
 import {BrowserRouter} from "react-router-dom";
+import {useCurrentUser} from "./store";
 import {AppRouters} from "./routes";
-import {store} from "./store";
-import {Provider} from "react-redux";
+import {Header} from "./layouts";
 
 function App() {
+  const currentUser = useCurrentUser();
+
   return (
     <BrowserRouter>
-      <Provider store={store}>
-        <AppRouters />
-      </Provider>
+        <div className="d-flex flex-column min-vw-100 min-vh-100 first-bg-color">
+          {
+            currentUser &&
+            <Header/>
+          }
+          <AppRouters/>
+        </div>
     </BrowserRouter>
   )
 }

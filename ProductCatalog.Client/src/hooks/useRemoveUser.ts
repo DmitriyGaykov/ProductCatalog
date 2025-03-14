@@ -3,7 +3,7 @@ import {useCallback} from "react";
 import {toast} from "react-toastify";
 import {extractErrors} from "../utils";
 
-export const useUserRemove = () => {
+export const useRemoveUser = () => {
   const [removeUser, { isLoading }] = useRemoveUserMutation();
 
   const _removeUser = useCallback(async (userId: string) => {

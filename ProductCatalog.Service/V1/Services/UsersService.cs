@@ -35,6 +35,7 @@ public class UsersService : IUsersService
         queries.TryGetValue("password", out var password);
         queries.TryGetValue("page", out var s_page);
         queries.TryGetValue("limit", out var s_limit);
+        queries.TryGetValue("blocked", out var blocked);
 
         var userIds = ids?
             .Split("|")
@@ -45,14 +46,9 @@ public class UsersService : IUsersService
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit);
 
-        var blockedUsers = _context
-            .Blocks
-            .Where(b => b.DeletedAt == null)
-            .Select(b => b.UserId)
-            .Distinct();
-
-        return await _context
+        var query = _context
             .Users
+            .Include(u => u.Blocks.Where(b => b.DeletedAt == null))
             .Where(u =>
                 (ids == null || (userIds != null && userIds.Contains(u.Id))) &&
                 (
@@ -63,9 +59,18 @@ public class UsersService : IUsersService
                 (role == null || u.Role.ToLower().Equals(role)) &&
                 (email == null || (u.Email != null && u.Email.Equals(email))) &&
                 (password == null || u.PasswordHash.Equals(password)) &&
-                !blockedUsers.Contains(u.Id) &&
+                (
+                    blocked == null || !blocked.Equals("1") ? // Не заблокированые?
+                        u.Blocks.Where(b => b.DeletedAt == null).Count() == 0:
+                        u.Blocks.Where(b => b.DeletedAt == null).Count() > 0
+                ) &&
                 u.DeletedAt == null
             )
+            .AsQueryable();
+
+        queries[WebApiConfig.CountElementsKey] = (await query.CountAsync()).ToString();
+
+        return await query
             .OrderBy(u => u.FirstName + u.LastName)
             .Skip(skip)
             .Take(limit)

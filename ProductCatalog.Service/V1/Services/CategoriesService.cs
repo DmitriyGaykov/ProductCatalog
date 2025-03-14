@@ -39,7 +39,7 @@ public class CategoriesService : ICategoriesService
 
         var (skip, limit) = SkipLimitExtractor.ExtractSkipAndLimitFrom(s_page, s_limit, 100);
 
-        return await _context
+        var query = _context
             .Categories
             //.Include(c => c.Parent)
             //.Include(c => c.Children)
@@ -49,6 +49,11 @@ public class CategoriesService : ICategoriesService
                 //(parentId == null || c.ParentId.Equals(new Guid(parentId))) &&
                 c.DeletedAt == null
             )
+            .AsQueryable();
+
+        queries[WebApiConfig.CountElementsKey] = (await query.CountAsync()).ToString();
+
+        return await query
             .OrderBy(c => c.Name)
             .Skip(skip)
             .Take(limit)

@@ -4,3 +4,5 @@ export const LocalStorageKeys = {
   ExpiresAtKey: 'pc-expiresAt',
   UserKey: 'pc-user',
 }
+
+export const CountEntitiesHeader = 'x-count-elements';

@@ -28,4 +28,6 @@ public class User
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime? DeletedAt { get; set; } = null;
     public DateTime? ModifiedAt { get; set; } = null;
+
+    public virtual IEnumerable<Block> Blocks { get; set; } = new List<Block>();
 }

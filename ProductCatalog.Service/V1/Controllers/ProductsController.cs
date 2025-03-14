@@ -32,7 +32,11 @@ public class ProductsController : ExtendedController
     {
         try
         {
-            var products = await _productsService.FindAllAsync(Queries);
+            var queries = Queries;
+            var products = await _productsService.FindAllAsync(queries);
+
+            Response.Headers.Append(WebApiConfig.CountElementsKey, queries[WebApiConfig.CountElementsKey]);
+
             return Ok(products);
         }
         catch (Exception e)

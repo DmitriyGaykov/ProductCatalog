@@ -36,7 +36,12 @@ public class UsersController : ExtendedController
             var queries = Queries;
             queries.Remove("password");
 
+            if (!CurrentUser!.Role.Equals(Roles.Admin))
+                queries.Remove("blocked");
+
             var users = await _usersService.FindAllAsync(queries);
+            Response.Headers.Append(WebApiConfig.CountElementsKey, queries[WebApiConfig.CountElementsKey]);
+
             return Ok(users);
         }
         catch (Exception e)

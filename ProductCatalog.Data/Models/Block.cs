@@ -12,7 +12,6 @@ public class Block
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    [ForeignKey("User")]
     public Guid UserId { get; set; }
     [ForeignKey("Administrator")]
     public Guid AdministratorId { get; set; }

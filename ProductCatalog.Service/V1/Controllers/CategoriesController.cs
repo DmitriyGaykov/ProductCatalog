@@ -32,7 +32,10 @@ public class CategoriesController : ExtendedController
     {
         try
         {
-            var categories = await _categoriesService.FindAllAsync(Queries);
+            var queries = Queries;
+            var categories = await _categoriesService.FindAllAsync(queries);
+
+            Response.Headers.Append(WebApiConfig.CountElementsKey, queries[WebApiConfig.CountElementsKey]);
             return Ok(categories);
         }
         catch (Exception e)

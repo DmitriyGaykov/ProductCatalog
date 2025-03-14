@@ -37,7 +37,10 @@ public class BlocksController : ExtendedController
     {
         try
         {
-            var blocks = await _blocksService.FindAllAsync(Queries);
+            var queries = Queries;
+            var blocks = await _blocksService.FindAllAsync(queries);
+
+            Response.Headers.Append(WebApiConfig.CountElementsKey, queries[WebApiConfig.CountElementsKey]);
             return Ok(blocks);
         }
         catch (Exception e)

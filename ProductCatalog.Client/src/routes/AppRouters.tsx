@@ -1,9 +1,8 @@
 import {FC} from "react";
 import {Route, Routes} from "react-router-dom";
-import {AuthPage, CatalogPage} from "../pages";
+import {AuthPage, CatalogPage, LoadingPage, UsersPage} from "../pages";
 import {useCurrentUser} from "../store";
 import {useStartAuth} from "../hooks";
-import {LoadingPage} from "../pages/LoadingPage.tsx";
 
 export const AppRouters: FC = () => {
   const currentUser = useCurrentUser()
@@ -23,6 +22,8 @@ export const AppRouters: FC = () => {
                   <Route index path="*" element={<AuthPage/>}/>
                 </> :
                 <>
+                  <Route index path="/products" element={<CatalogPage/>}/>
+                  <Route path="/users" element={<UsersPage />}/>
                   <Route index path="*" element={<CatalogPage/>}/>
                 </>
             }

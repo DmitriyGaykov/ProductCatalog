@@ -49,6 +49,7 @@ builder
     {
         // Дополнительные настройки сериализатора, если необходимо
         options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
 
 #region Jwt
@@ -142,7 +143,8 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin() 
                .AllowAnyMethod() 
-               .AllowAnyHeader(); 
+               .AllowAnyHeader()
+               .WithExposedHeaders("x-count-elements"); 
     });
 });
 

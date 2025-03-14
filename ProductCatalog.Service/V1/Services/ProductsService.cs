@@ -2,6 +2,7 @@
 using ProductCatalog.Data;
 using ProductCatalog.Data.Models;
 using ProductCatalog.Service.Api.Utils.Pagination;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ProductCatalog.Service.V1.Services;
 
@@ -69,6 +70,8 @@ public class ProductsService : IProductsService
                    filteredData.OrderBy(p => p.Name);
                 break;
         }
+
+        queries[WebApiConfig.CountElementsKey] = (await filteredData.CountAsync()).ToString();
 
         return await filteredData
             .Skip(skip)
