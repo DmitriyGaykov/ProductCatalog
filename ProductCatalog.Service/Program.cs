@@ -167,6 +167,7 @@ var app = builder.Build();
 
 #region Migrations
 
+Task.Delay(10_000).Wait();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
