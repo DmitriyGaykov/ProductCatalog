@@ -1,3 +1,3 @@
 export interface Params {
-  [key: string]: string | number | boolean | Date | null;
+  [key: string]: string | number | boolean | Date | null | undefined;
 }

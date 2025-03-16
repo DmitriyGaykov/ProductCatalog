@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {authApi, blocksApi, usersApi} from "./api";
+import {authApi, blocksApi, categoriesApi, productsApi, usersApi} from "./api";
 import {authReducer} from "./slices";
 
 export const store = configureStore({
@@ -8,6 +8,8 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [blocksApi.reducerPath]: blocksApi.reducer,
+    [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [productsApi.reducerPath]: productsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -15,6 +17,8 @@ export const store = configureStore({
         authApi.middleware,
         usersApi.middleware,
         blocksApi.middleware,
+        categoriesApi.middleware,
+        productsApi.middleware,
       ),
 });
 

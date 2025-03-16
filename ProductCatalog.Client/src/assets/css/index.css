@@ -56,12 +56,21 @@
   max-width: 400px;
 }
 
+.max-width-600 {
+  max-width: 600px;
+}
+
+
 .max-width-1500 {
   max-width: 1500px;
 }
 
 .width-80 {
   width: 80px;
+}
+
+.width-100 {
+  width: 100px;
 }
 
 .width-150 {
@@ -78,6 +87,14 @@
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.height-60 {
+  height: 60px;
+}
+
+.height-80 {
+  height: 80px;
 }
 
 .blur-dark-bg {
@@ -112,6 +129,23 @@ th, td {
 
 .scroll-container {
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px; // Ширина скролла
+    border-radius: 2px; // Закругленные углы скролла
+    background-color: #ffffff60; // Цвет фона скролла
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff60; // Цвет скролла
+    margin: 10px;
+    padding: 2px;
+    border-radius: 2px; // Закругленные углы скролла
+  }
+}
+
+.scroll-container-x {
+  overflow-x: auto;
 
   &::-webkit-scrollbar {
     width: 10px; // Ширина скролла

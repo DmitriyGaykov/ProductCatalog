@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductCatalog.Data;
 
@@ -11,9 +12,11 @@ using ProductCatalog.Data;
 namespace ProductCatalog.Data.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    partial class ProductCatalogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250315164955_Categories_RemoveField_ParentId")]
+    partial class Categories_RemoveField_ParentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,8 +180,8 @@ namespace ProductCatalog.Data.Migrations
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000001"),
-                            CreatedAt = new DateTime(2025, 3, 16, 13, 32, 4, 326, DateTimeKind.Local).AddTicks(3395),
-                            Email = "admin@mail.ru",
+                            CreatedAt = new DateTime(2025, 3, 15, 19, 49, 53, 712, DateTimeKind.Local).AddTicks(3688),
+                            Email = "admin@mail.by",
                             FirstName = "Администратор",
                             PasswordHash = "932f3c1b56257ce8539ac269d7aab42550dacf8818d075f0bdf1990562aae3ef",
                             Role = "Admin"

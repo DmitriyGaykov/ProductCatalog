@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:5073'
+export const API_URL = ''
 export const LocalStorageKeys = {
   AccessTokenKey: 'pc-accessToken',
   ExpiresAtKey: 'pc-expiresAt',

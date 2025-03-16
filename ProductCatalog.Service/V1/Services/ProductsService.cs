@@ -27,6 +27,7 @@ public class ProductsService : IProductsService
         queries.TryGetValue("userid", out var userId);
         queries.TryGetValue("categoryid", out var categoryId);
         queries.TryGetValue("q", out var q);
+        queries.TryGetValue("uq", out var uq); // user query
         queries.TryGetValue("pricefrom", out var s_priceFrom);
         queries.TryGetValue("priceto", out var s_priceTo);
         queries.TryGetValue("sortby", out var sortBy);
@@ -45,10 +46,16 @@ public class ProductsService : IProductsService
         var filteredData = _context
             .Products
             .Include(p => p.User)
+            .Include(p => p.Category)
             .Where(p =>
                 p.DeletedAt == null &&
+                p.Category!.DeletedAt == null &&
                 (userId == null || p.UserId.Equals(new Guid(userId))) &&
                 (categoryId == null || p.CategoryId.Equals(new Guid(categoryId))) &&
+                (uq == null || (
+                    (p.User!.FirstName + " " + (p.User!.LastName ?? string.Empty)).ToLower().Contains(uq) ||
+                    ((p.User.LastName ?? string.Empty) + " " + p.User.FirstName).ToLower().Contains(uq)
+                )) &&
                 (q == null || p.Name.ToLower().Contains(q) || p.Description.ToLower().Contains(q) || (p.Notes != null && p.Notes.ToLower().Contains(q))) &&
                 (p.Price >= priceFrom && p.Price <= priceTo)
             )
@@ -84,6 +91,7 @@ public class ProductsService : IProductsService
         return _context
             .Products
             .Include(p => p.User)
+            .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Id.Equals(id));
     }
 

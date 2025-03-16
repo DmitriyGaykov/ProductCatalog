@@ -13,6 +13,7 @@ using ProductCatalog.Service.Services;
 using ProductCatalog.Service.V1.Services;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using ProductCatalog.Service.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,7 @@ builder.Host.UseSerilog();
 
 #region Sql Connection
 
-var connectionString = builder.Configuration.GetConnectionString("ProductCatalog");
+var connectionString = EnvironmentConfig.GetProductCatalogConnectionString() ?? builder.Configuration.GetConnectionString("ProductCatalog");
 builder.Services.AddDbContextFactory<ProductCatalogDbContext>(options =>
     options.UseSqlServer(connectionString));
 

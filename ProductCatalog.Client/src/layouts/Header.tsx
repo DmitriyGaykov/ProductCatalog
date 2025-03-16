@@ -2,6 +2,7 @@ import {useCurrentUser} from "../store";
 import LogoutSvg from './../assets/svg/logout-2-svgrepo-com.svg';
 import AddUserSvg from './../assets/svg/add-user-svgrepo-com.svg';
 import UsersSvg from './../assets/svg/users-svgrepo-com.svg';
+import CatalogSvg from './../assets/svg/shopping-catalog-svgrepo-com.svg';
 import {useAuth, useMenu} from "../hooks";
 import {useEffect, useState} from "react";
 import {Roles} from "../models";
@@ -46,6 +47,8 @@ export const Header = () => {
           Здравствуйте, {currentUser?.firstName || ""} {currentUser?.lastName || ""} ({role})
         </span>
         <div className="d-flex align-items-center gap-2">
+          <img src={CatalogSvg} className="cursor-pointer" alt="Users" width={29} height={29}
+               onClick={() => navigate('/catalog')}/>
           {
             currentUser!.role === Roles.Admin &&
               <>

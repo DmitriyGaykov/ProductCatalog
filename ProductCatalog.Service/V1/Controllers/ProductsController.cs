@@ -83,6 +83,7 @@ public class ProductsController : ExtendedController
 
             product = await _productsService.AddAsync(product);
             product.User = CurrentUser;
+            product.Category = category;
 
             return Ok(product);
         }
@@ -176,5 +177,26 @@ public class ProductsController : ExtendedController
         {
             return BadRequest(e);
         }
+    }
+
+    private IActionResult Ok(Product product)
+    {
+        PrepareProduct(product);
+        return base.Ok(product);
+    }
+
+    private IActionResult Ok(IEnumerable<Product> products)
+    {
+        if (CurrentUser!.Role.Equals(Roles.User))
+            foreach (var product in products)
+                PrepareProduct(product);
+
+        return base.Ok(products);
+    }
+
+    private void PrepareProduct(Product product)
+    {
+        if (CurrentUser!.Role.Equals(Roles.User))
+            product.SpecialNotes = null;
     }
 }

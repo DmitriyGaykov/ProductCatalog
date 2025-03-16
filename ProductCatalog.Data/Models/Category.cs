@@ -12,7 +12,7 @@ public class Category
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    public Guid? ParentId { get; set; } = null;
+    //public Guid? ParentId { get; set; } = null;
     public Guid UserId { get; set; }
 
     [Required]

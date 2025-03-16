@@ -1,3 +1,5 @@
 export * from './authApi.ts'
 export * from './usersApi.ts'
 export * from './blocksApi.ts'
+export * from './categoriesApi.ts'
+export * from './productsApi.ts'

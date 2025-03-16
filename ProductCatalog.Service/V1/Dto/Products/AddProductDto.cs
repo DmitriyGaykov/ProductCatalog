@@ -22,6 +22,6 @@ public class AddProductDto
     [Range(0.10, 10000.0, ErrorMessage = ExceptionsText.ProductPriceIsNotValid)]
     public decimal Price { get; set; }
 
-    [Required(ErrorMessage = ExceptionsText.ProductCategoryIsRequired)]
+    [Required(ErrorMessage = ExceptionsText.ProductCategoryIsRequired)] 
     public Guid CategoryId { get; set; }
 }

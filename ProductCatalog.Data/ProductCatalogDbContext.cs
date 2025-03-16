@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductCatalog.Data.Models;
 using ProductCatalog.Service.Api.Crypto;
+using ProductCatalog.Service;
+using ProductCatalog.Service.Api;
 
 namespace ProductCatalog.Data;
 
@@ -63,7 +65,7 @@ public class ProductCatalogDbContext : DbContext
         {
             Id = new Guid("00000000-0000-0000-0000-000000000001"),
             FirstName = "Администратор",
-            Email = "admin@mail.by",
+            Email = "admin@mail.ru",
             PasswordHash = pwd,
             Role = Roles.Admin
         };

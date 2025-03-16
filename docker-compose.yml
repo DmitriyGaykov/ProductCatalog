@@ -1,0 +1,43 @@
+version: "3.9"
+
+networks:
+  product_network:
+    driver: bridge
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "22410:1433"
+    environment:
+      SA_PASSWORD: "Qwerty12345"
+      ACCEPT_EULA: "Y"
+    networks:
+      - product_network
+
+  productcatalog.service:
+    image: ${DOCKER_REGISTRY-}productcatalogservice
+    build:
+      context: .
+      dockerfile: ProductCatalog.Service/Dockerfile
+    ports:
+      - "22400:8080"
+    depends_on:
+      - sqlserver
+    environment:
+      - PRODUCT_CATALOG_CONNECTION_STRING=Server=sqlserver;Database=ProductCatalog;User Id=sa;Password=Qwerty12345;Trust Server Certificate=True;
+      - DOTNET_SYSTEM_NET_HTTP_TIMEOUT=100000 
+    networks:
+      - product_network
+
+  productcatalog.client:
+    image: ${DOCKER_REGISTRY-}productcatalogclient
+    build: 
+      context: ./ProductCatalog.Client
+    ports:
+      - "22401:80"
+    networks:
+      - product_network
+    depends_on:
+      - productcatalog.service
