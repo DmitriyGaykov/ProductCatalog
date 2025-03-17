@@ -11,7 +11,7 @@ services:
     ports:
       - "22410:1433"
     environment:
-      SA_PASSWORD: "Qwerty12345"
+      SA_PASSWORD: ${SA_PASSWORD}
       ACCEPT_EULA: "Y"
     networks:
       - product_network
@@ -26,7 +26,7 @@ services:
     depends_on:
       - sqlserver
     environment:
-      - PRODUCT_CATALOG_CONNECTION_STRING=Server=sqlserver;Database=ProductCatalog;User Id=sa;Password=Qwerty12345;Trust Server Certificate=True;
+      - PRODUCT_CATALOG_CONNECTION_STRING=Server=sqlserver;Database=ProductCatalog;User Id=sa;Password=${SA_PASSWORD};Trust Server Certificate=True;
       - DOTNET_SYSTEM_NET_HTTP_TIMEOUT=100000 
     networks:
       - product_network
